@@ -1,6 +1,6 @@
 import http from "http";
-import WebSocket from "ws";
 import express from "express";
+import SocketIo from "socket.io";
 
 const PORT_NUMBER = 3000;
 
@@ -15,31 +15,40 @@ app.get("/*", (req, res) => res.redirect("/"));
 const handleListen = () =>
   console.log(`Listening on http://localhost:${PORT_NUMBER}`);
 
-const server = http.createServer(app);
-const wss = new WebSocket.Server({ server });
+const httpServer = http.createServer(app);
+const wsServer = SocketIo(httpServer);
 
-const sockets = [];
-
-wss.on("connection", (socket) => {
-  sockets.push(socket);
-  socket["nickname"] = "Anon";
-  console.log("Connected to Browser ✅");
-  socket.on("close", () => {
-    console.log("Disconnected from client ❌");
-  });
-  socket.on("message", (msg) => {
-    const messageObj = JSON.parse(msg);
-    switch (messageObj.type) {
-      case "message":
-        sockets.forEach((aSocket) =>
-          aSocket.send(`${socket.nickname}: ${messageObj.payload}`)
-        );
-        break;
-      case "nickname":
-        socket["nickname"] = messageObj.payload;
-        break;
-    }
+wsServer.on("connection", (socket) => {
+  socket.on("enter_room", (msg, doen) => {
+    console.log(msg);
+    setTimeout(() => {
+      doen();
+    }, 5 * 1000);
   });
 });
 
-server.listen(PORT_NUMBER, handleListen);
+// const sockets = [];
+
+// wss.on("connection", (socket) => {
+//   sockets.push(socket);
+//   socket["nickname"] = "Anon";
+//   console.log("Connected to Browser ✅");
+//   socket.on("close", () => {
+//     console.log("Disconnected from client ❌");
+//   });
+//   socket.on("message", (msg) => {
+//     const messageObj = JSON.parse(msg);
+//     switch (messageObj.type) {
+//       case "message":
+//         sockets.forEach((aSocket) =>
+//           aSocket.send(`${socket.nickname}: ${messageObj.payload}`)
+//         );
+//         break;
+//       case "nickname":
+//         socket["nickname"] = messageObj.payload;
+//         break;
+//     }
+//   });
+// });
+
+httpServer.listen(PORT_NUMBER, handleListen);
