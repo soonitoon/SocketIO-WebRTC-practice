@@ -100,3 +100,11 @@ subscribe();
 - HTML에서 enumerated attributes란 미리 정의된 텍스트만을 값으로 가질 수 있는 속성을 말한다.
 - `hidden` 속성은 `hidden`, `until-found`만을 값으로 가지며, 그 외의 모든 문자열은 `hidden` 키워드 값과 똑같이 처리된다는 점에서 `enumerated attribute`이다.
 - [Ref: MDN](https://developer.mozilla.org)
+
+### `querySelector()`에서 여러 개의 쿼리 사용하기
+
+`querySelector()`의 인수로 전달하는 문자열에 여러 개의 쿼리를 사용하여 부모 요소로부터 자식 요소를 선택할 수 있음.
+
+```javascript
+document.querySelector("#room h3"); // id가 room인 요소의 자식 요소 중 h3를 선택
+```
