@@ -1,6 +1,8 @@
 # Noom
 
-Zoom 클론 코딩으로 WebRTC + WebSockets 익히기. 
+Zoom 클론 코딩으로 WebRTC + WebSockets 익히기.
+
+> [Nomad Coder](https://nomadcoders.co)의 <줌 클론코딩> 강의를 기반으로 실습한 레포지토리입니다.
 
 ## 몰랐던 것 정리 노트
 
